@@ -1,0 +1,35 @@
+
+  
+    <div class="search-bar-wrapper">
+  <div class="search-bar-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search events</mat-label>
+      <input matInput [(ngModel)]="searchTerm" placeholder="Search by event name or description" (ngModelChange)="applyFilters()" />
+      <button mat-icon-button matSuffix *ngIf="searchTerm" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="category-select">
+      <mat-label>Filter by category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory" (selectionChange)="applyFilters()">
+        <mat-option value="">All Categories</mat-option>
+        <mat-option *ngFor="let category of allCategories" [value]="category">{{ category }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+    <div class="categories-section">
+      <ng-container *ngIf="filteredEventsByCategories.length > 0; else noEventsFound">
+        <div *ngFor="let categoryGroup of filteredEventsByCategories" class="category-group">
+          <h2>{{ categoryGroup.categoryName }}</h2>
+          <div class="event-cards-grid">
+            <app-event-card *ngFor="let event of categoryGroup.events" [event]="event"></app-event-card>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noEventsFound>
+        <p class="no-events-message">No events found for the selected criteria. Please check your backend connection or adjust your search.</p>
+      </ng-template>
+    </div>

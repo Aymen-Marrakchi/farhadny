@@ -1,0 +1,170 @@
+.contact-wrapper {
+  display: flex;
+  flex-direction: column; /* Arrange children in a column */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  min-height: 100vh; /* Make sure it takes full viewport height */
+  background: whitesmoke;
+  background-size: cover; /* This background will be for the entire wrapper */
+  color: #fff; /* This color might be overridden by internal elements */
+  padding: 60px 20px; /* Adjust padding for better responsiveness */
+  box-sizing: border-box;
+}
+
+.contact-left {
+  /* Remove flex: 1 and min-width here, as we want it to be centered as a block */
+  /* flex: 1; */
+  /* min-width: 300px; */
+
+  background-color: white; /* Light background for the form container */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 40px; /* Internal padding for the form container */
+  max-width: 500px; /* Limit the maximum width of the form container */
+  width: 100%; /* Make it responsive within its max-width */
+  text-align: center; /* Ensure text inside is left-aligned */
+  box-sizing: border-box; /* Include padding in the width/height */
+  margin: 0 auto;
+
+  h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px; /* Adjust if needed to control space below the bar */
+    color: rgb(27, 27, 27);
+    text-align: center;
+    position: relative; /* Make h2 a positioning context for the ::after element */
+    display: inline-block; /* Essential for centering 'after' element properly if h2 is wider than content */
+    padding-bottom: 10px; /* Add padding to make space for the bar */
+
+    /* --- ADDED FOR THE UNDERLINE BAR --- */
+    &::after {
+      content: ''; /* Required for pseudo-elements */
+      position: absolute; /* Position relative to the h2 */
+      left: 50%; /* Start from the middle of the h2 */
+      bottom: 0; /* Position at the bottom of the h2's padding */
+      transform: translateX(-50%); /* Pull it back by half its width to truly center */
+      width: 80px; /* Width of the bar (adjust as needed) */
+      height: 4px; /* Height/thickness of the bar */
+      background-color: #f5167e; /* Pink color from your design */
+      border-radius: 2px; /* Slightly rounded corners for the bar */
+    }
+    /* ---------------------------------- */
+  }
+
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    input, textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #f5167e;
+      padding: 10px 5px;
+      font-size: 1em;
+      color: black;
+      outline: none;
+      width: 100%; /* Ensure inputs take full width of form */
+      box-sizing: border-box; /* Include padding in width */
+
+      &::placeholder {
+        color: #020202;
+      }
+    }
+
+    textarea {
+      resize: vertical; /* Allow only vertical resizing */
+      height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background-color: #f5167e; /* Solid pink background */
+      color: #ffffff; /* White text */
+      font-size: 1em;
+      font-weight: bold;
+      border: none; /* Remove border */
+      border-radius: 30px; /* Rounded corners */
+      box-shadow: 0px 10px 20px rgba(245, 22, 126, 0.4); /* Subtle pink shadow */
+      cursor: pointer;
+      align-self: center; /* Center the button within the form */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+      width: auto; /* Allow button width to fit content */
+
+      &:hover {
+        background-color: #d80d69; /* Slightly darker pink on hover */
+        box-shadow: 0px 12px 25px rgba(245, 22, 126, 0.6); /* Slightly larger shadow on hover */
+        color: #ffffff; /* Keep text white on hover */
+      }
+    }
+  }
+}
+
+// If you plan to add content to contact-right, keep these styles.
+// Otherwise, you can remove the .contact-right block completely.
+.contact-right {
+  /* This block is currently empty in your HTML,
+     but if you add content like an image or contact info,
+     you might want to adjust its sizing and positioning
+     if it's meant to be next to the form.
+     For now, since only the form exists, we're making
+     the wrapper center the single contact-left element.
+  */
+  /* flex: 1; */
+  /* min-width: 250px; */
+  /* display: flex; */
+  /* align-items: center; */
+
+  .contact-info {
+    background: transparent;
+    padding: 20px;
+    font-size: 1.1em;
+    color: #333; /* Ensure text is visible on white background */
+
+    h3 {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      color: rgb(5, 0, 141);
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-wrapper {
+    padding: 30px 15px; /* Reduce padding on smaller screens */
+  }
+
+  .contact-left {
+    padding: 30px 20px; /* Adjust internal padding */
+    max-width: 90%; /* Allow it to take more width on small screens */
+
+    h2 {
+      font-size: 2em;
+    }
+
+    form button {
+      padding: 10px 20px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-left {
+    padding: 20px 15px; /* Further reduce padding */
+  }
+  .contact-left h2 {
+    font-size: 1.8em;
+  }
+  .contact-left form input,
+  .contact-left form textarea {
+    font-size: 0.9em;
+  }
+}

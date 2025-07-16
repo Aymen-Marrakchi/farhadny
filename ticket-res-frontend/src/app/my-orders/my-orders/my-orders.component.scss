@@ -1,0 +1,158 @@
+.my-orders-container {
+  padding: 100px 20px;
+  max-width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+
+  h2 {
+    text-align: center; /* This centers the text INSIDE the h2 */
+    color: rgb(27, 27, 27);
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block; /* Keep this to make h2 shrink to content width */
+    padding-bottom: 10px;
+
+    /* --- CRITICAL CHANGE FOR CENTERING THE H2 ITSELF --- */
+    /* When display: inline-block, margin: 0 auto needs the parent to have text-align: center,
+       OR the element itself needs to be a block with a defined width.
+       Let's ensure the parent container is flexible and allows it to center naturally,
+       and ensure the h2 behaves like a block for margin auto to work. */
+    width: auto; /* Allow width to shrink to content */
+    margin-left: auto; /* For centering */
+    margin-right: auto; /* For centering */
+    /* Or more concisely, if direct parent has text-align: center or is a flex container with justify-content: center */
+    /* Let's adjust the h2 slightly to guarantee horizontal centering of the element itself */
+    display: block; /* Make it a block-level element */
+    width: fit-content; /* Make its width fit its content */
+    margin: 0 auto 30px auto; /* Center it, and apply bottom margin */
+    /* ---------------------------------------------------- */
+
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: #f5167e;
+      border-radius: 2px;
+    }
+  }
+
+  .loading-message, .error-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1em;
+    color: #555;
+  }
+
+  .error-message {
+    color: #d9534f;
+    font-weight: bold;
+  }
+
+  .ticket-list {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); // Responsive grid
+  }
+
+  .ticket-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .ticket-details {
+      padding: 20px;
+      flex-grow: 1; // Allows details section to take available space
+
+      h3 {
+        color: #ff00aa;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.4em;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 0.95em;
+
+        strong {
+          color: #333;
+        }
+      }
+
+      h4 {
+        color: #ff00aa;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      .event-image-wrapper {
+        text-align: center;
+        margin-top: 15px;
+        .event-image {
+          max-width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    .qr-code-section {
+      background-color: #f2f2f2;
+      padding: 15px;
+      text-align: center;
+      border-top: 1px solid #eee;
+
+      h4 {
+        margin-top: 0;
+        color: #333;
+        font-size: 1.2em;
+      }
+
+      qrcode {
+        display: block;
+        margin: 10px auto;
+        border: 2px solid #ddd;
+        padding: 5px;
+        background-color: white;
+      }
+
+      .qr-code-text {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.85em;
+        color: #777;
+        word-break: break-all;
+        margin-top: 10px;
+      }
+
+      .no-qr-message {
+        color: #d9534f;
+        font-style: italic;
+        margin-top: 10px;
+      }
+    }
+  }
+}

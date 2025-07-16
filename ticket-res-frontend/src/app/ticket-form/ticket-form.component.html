@@ -1,0 +1,30 @@
+<div class="ticket-form-wrapper">
+  <div class="ticket-form-card">
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+  <mat-label>Number of Tickets</mat-label>
+  <input
+    matInput
+    type="number"
+    min="1"
+    max="10"
+    [(ngModel)]="quantity"
+    name="quantity"
+    required
+    (input)="onQuantityChange()" />
+</mat-form-field>
+
+      <p class="total-price">Total: {{ totalPrice | currency:'TND':'symbol':'1.2-2' }}</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Seat Information (Optional)</mat-label>
+        <mat-select [(ngModel)]="selectedSeatInfo" name="seatInfo">
+          <mat-option [value]="null">No specific seat</mat-option>
+          <mat-option *ngFor="let seat of seatInfoOptions" [value]="seat">{{ seat }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button type="submit" class="custom-buy-button">Buy Now</button>
+    </form>
+  </div>
+</div>

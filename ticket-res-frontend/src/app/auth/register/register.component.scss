@@ -1,0 +1,92 @@
+.register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: whitesmoke;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.register-container {
+  max-width: 450px;
+  width: 100%;
+  padding: 35px;
+  background-color:white; // dark translucent card
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+  color: #fff;
+  text-align: center;
+
+  h2 {
+    font-size: 2.5em; /* Larger font size like previous headings */
+    color: rgb(27, 27, 27); /* Dark grey/black text */
+    margin-bottom: 30px; /* Space below heading and bar */
+    font-weight: bold;
+    position: relative; /* For the underline ::after */
+    display: block; /* Essential for margin auto to work */
+    width: fit-content; /* Make its width fit its content */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    padding-bottom: 10px; /* Space for the underline */
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 80px; /* Adjust width as needed */
+      height: 4px; /* Thickness of the bar */
+      background-color: #f5167e; /* Pink color */
+      border-radius: 2px;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  mat-form-field {
+    width: 100%;
+
+    .mat-form-field-wrapper {
+      background-color: transparent;
+    }
+
+    .mat-form-field-outline {
+      color: #fff;
+    }
+
+    .mat-input-element {
+      color: #fff;
+    }
+
+    .mat-form-field-label {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .custom-register-button {
+    background-color: #f5167e; /* Solid pink background */
+    color: #ffffff; /* White text */
+    border: none; /* Remove border */
+    border-radius: 30px; /* Rounded corners */
+    padding: 12px 30px; /* Adjusted padding to match previous buttons */
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase; /* Keep uppercase as per your original style */
+    cursor: pointer;
+    box-shadow: 0px 10px 20px rgba(245, 22, 126, 0.4); /* Subtle pink shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; /* Smooth transitions */
+
+    &:hover {
+      background-color: #d80d69; /* Slightly darker pink on hover */
+      box-shadow: 0px 12px 25px rgba(245, 22, 126, 0.6); /* Slightly larger shadow on hover */
+      color: #ffffff; /* Keep text white on hover */
+    }
+  }
+}

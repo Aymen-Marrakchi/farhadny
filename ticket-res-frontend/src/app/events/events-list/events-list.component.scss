@@ -1,0 +1,219 @@
+:host {
+  display: block;
+  background-color: #ffffff; /* Overall page background */
+  width: 100%;
+  max-width: 100%;
+  padding-bottom: 40px;
+}
+
+
+/* --- SEARCH BAR SECTION STYLING --- */
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  padding:  300px 0 16px; /* Horizontal padding for wrapper */
+  margin-top: -120px; /* Adjusted to increase overlap with hero section */
+  position: relative; /* Needed for z-index */
+  z-index: 10; /* Ensure search bar is on top of hero section */
+}
+
+.search-bar-container {
+  background-color: rgb(255, 255, 255); /* Confirmed color from your design */
+  border-radius: 12px;
+  padding: 25px 30px; /* Internal padding, responsive via media queries */
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to next line on smaller screens */
+  gap: 20px; /* Gap between form fields */
+  justify-content: center;
+  width: 90%;
+  max-width: 800px; /* Max width for the search bar container */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Glassmorphism shadow */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border */
+}
+
+.search-field {
+  flex-grow: 2; /* Search field takes proportionally more space (e.g., 2/3) */
+  max-width: 500px; /* Adjusted max-width for the search input */
+  min-width: 250px; /* Responsive via media queries */
+}
+.category-select {
+  flex-grow: 1; /* Category select takes proportionally less space (e.g., 1/3) */
+  max-width: 250px; /* Adjusted max-width for the category select */
+  min-width: 180px; /* Ensure it doesn't get too small, responsive via media queries */
+}
+
+/* 🎨 Material Input Styling (Outline Appearance) */
+.search-bar-container .mat-form-field {
+    width: 100%; /* Allows flex-grow to manage width on larger screens, full width on small */
+}
+
+/* Target the outline border colors */
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-outline-start,
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-outline-gap,
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-color: rgba(255, 255, 255, 0.5) !important; /* Light border color */
+}
+
+/* Outline color on hover/focus */
+.search-bar-container .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-start,
+.search-bar-container .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-gap,
+.search-bar-container .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-end,
+.search-bar-container .mat-form-field-appearance-outline:hover .mat-form-field-outline-start,
+.search-bar-container .mat-form-field-appearance-outline:hover .mat-form-field-outline-gap,
+.search-bar-container .mat-form-field-appearance-outline:hover .mat-form-field-outline-end {
+    border-color: #f5167e !important; /* Accent color on hover/focus */
+}
+
+/* Text colors (labels, input text, dropdown value) */
+.search-bar-container .mat-form-field-label,
+.search-bar-container .mat-input-element,
+.search-bar-container .mat-select-value-text,
+.search-bar-container .mat-select-placeholder {
+  color: #ffffff !important; /* White text/labels */
+}
+
+/* Placeholder color */
+.search-bar-container .mat-input-element::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important; /* Light grey placeholder */
+  opacity: 1 !important; /* Ensure visibility */
+}
+
+/* Icons (suffix icon, select arrow) */
+.search-bar-container .mat-select-arrow,
+.search-bar-container .mat-icon-button .mat-icon {
+  color: #ffffff !important; /* White icons */
+}
+
+/* Background of the input area itself for outline appearance */
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-flex {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight white tint for the input background */
+    border-radius: 8px; /* Match form field container border radius */
+}
+
+/* Adjust padding for the content inside the outline form field for visual balance */
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0.75em 1em !important;
+    align-items: center;
+}
+.search-bar-container .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important; /* Remove default margins if any */
+}
+
+
+/* --- CATEGORIES AND EVENT CARDS SECTION --- */
+.categories-section {
+  text-align: center;
+  padding: 0 16px; /* Consistent horizontal padding */
+  margin-top: 50px; /* Space below the search bar */
+  position: relative;
+  z-index: 1; /* Below the search bar */
+}
+
+.category-group {
+  margin-bottom: 50px;
+}
+
+.category-group h2 {
+  font-size: 2.5em; /* Responsive via media queries */
+  font-weight: 700;
+  color: rgb(19, 19, 19); /* Dark grey for white background */
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.category-group h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: #f5167e;
+  border-radius: 2px;
+}
+
+.event-cards-grid {
+  display: grid;
+  /* Excellent use of auto-fit and minmax for fluid columns */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px; /* Responsive via media queries */
+  padding: 24px; /* Responsive via media queries */
+  background-color: #ffffff;
+  .mat-icon {
+    color: #999 !important;
+  }
+}
+
+.no-events-message {
+  color: #333333; /* Dark grey for white background */
+  font-size: 1.2em;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f0f0f0; /* Light grey for white background */
+  border-radius: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* Tablet and larger phones */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3em;
+  }
+  .hero-subtitle {
+    font-size: 1em;
+    width: 85%;
+  }
+  .hero-section {
+    height: 350px; /* Shorter hero on smaller screens */
+  }
+  .search-bar-wrapper {
+      margin-top: -60px; /* Adjust overlap for smaller hero */
+  }
+  .search-bar-container {
+      padding: 20px 15px;
+      flex-direction: column; /* Stack inputs vertically on smaller screens */
+      align-items: center;
+  }
+  .search-field, .category-select {
+    min-width: unset; /* Remove min-width constraint on small screens */
+    width: 100%; /* Full width within the container on small screens */
+    max-width: 350px; /* Still constrain max width */
+  }
+  .event-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly smaller min-width for cards */
+    gap: 20px; /* Smaller gap */
+  }
+  .category-group h2 {
+    font-size: 2em;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2.2em;
+  }
+  .hero-subtitle {
+    font-size: 0.9em;
+  }
+  .hero-section {
+    height: 280px;
+  }
+  .search-bar-wrapper {
+      margin-top: -40px;
+  }
+  .search-bar-container {
+    padding: 15px 10px;
+  }
+  .event-cards-grid {
+    padding: 15px;
+    grid-template-columns: 1fr; /* Single column layout for very small screens */
+  }
+}

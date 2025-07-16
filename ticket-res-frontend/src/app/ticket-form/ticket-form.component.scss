@@ -1,0 +1,41 @@
+.ticket-form-card {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+  background-color: transparent;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .total-price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #f5167e; // Green color for price
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: #f5167e;
+    border: 2px solid #f5167e;
+    color: white;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+
+    &:hover {
+      background-color: #d80d69;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.newsletter-container {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.newsletter-container h3 {
+  font-family: "DM Sans", Helvetica;
+  font-weight: 700;
+  font-size: 18px;
+  color: #ffffff;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+
+.newsletter-container p {
+  font-family: "DM Sans", Helvetica;
+  font-weight: 400;
+  font-size: 14px;
+  color: #f3f3f3;
+  letter-spacing: 0;
+  line-height: 22.4px;
+  margin-bottom: 20px;
+  width: 362px;
+}
+
+.newsletter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.subscribe-button,
+.unsubscribe-button {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  width: 124px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 7.6px;
+  padding: 15.2px 30.4px;
+  background-color: #f5167e; /* Pink accent color */
+  border-radius: 50px;
+  box-shadow: 0px 10px 50px rgba(60, 54, 241, 0.25);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  position: relative;
+  width: fit-content;
+  margin-top: -1.58px;
+  -webkit-text-stroke: 0.38px #ffffff;
+  font-family: "DM Sans", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 12.2px;
+  letter-spacing: 0.79px;
+  line-height: normal;
+}
+
+.subscribe-button:hover,
+.unsubscribe-button:hover {
+  opacity: 0.9;
+}
+
+.message {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #fff;
+  background-color: rgba(0, 123, 255, 0.2);
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.login-prompt-message {
+  font-family: "DM Sans", Helvetica;
+  font-size: 14px;
+  color: #f3f3f3;
+  margin-top: 15px;
+}

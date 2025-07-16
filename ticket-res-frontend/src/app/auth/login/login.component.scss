@@ -1,0 +1,126 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: whitesmoke;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.login-container {
+  max-width: 450px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.login-card {
+  background-color: white;
+  color: #fff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+  
+}
+.mat-mdc-card-header {
+  display: flex;
+  display: block;
+  padding: 0 !important;
+}
+
+
+mat-card-title {
+  /* --- STYLES FOR THE LOGIN HEADING (LIKE "CONCERT" OR "CONTACT US") --- */
+  font-size: 2.5em; /* Larger font size like previous headings */
+  color: rgb(27, 27, 27); /* Dark grey/black text */
+  text-align: center;
+  margin-bottom: 30px; /* Space below heading and bar */
+  font-weight: bold;
+  position: relative; /* For the underline ::after */
+  display: inline-block; /* Essential for centering 'after' element properly relative to text width */
+  padding-bottom: 20px; /* Space for the underline */
+  padding: 16px 100px 15px !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px; /* Adjust width as needed */
+    height: 4px; /* Thickness of the bar */
+    background-color: #f5167e; /* Pink color */
+    border-radius: 2px;
+  }
+  /* --------------------------------------------------------------------- */
+
+  /* To center the mat-card-title element itself within the card */
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+  
+
+  .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .mat-input-element {
+    color: white;
+  }
+
+  .mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.3);
+  }
+  &.mat-focused {
+    .mat-form-field-label {
+      color: #ff00aa; /* Pink on focus */
+    }
+    .mat-form-field-ripple {
+      background-color: #ff00aa; /* Pink ripple */
+    }
+    .mat-form-field-outline {
+      color: #ff00aa; /* Pink outline on focus */
+    }
+  }
+}
+
+.custom-login-button {
+  background-color: #f5167e; /* Solid pink background */
+  color: #ffffff; /* White text */
+  border: none; /* Remove border */
+  border-radius: 30px; /* Rounded corners */
+  padding: 12px 30px; /* Adjusted padding to match previous buttons */
+  font-size: 1em;
+  font-weight: bold;
+  width: 100%; /* Keep full width as per your previous style */
+  cursor: pointer;
+  box-shadow: 0px 10px 20px rgba(245, 22, 126, 0.4); /* Subtle pink shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; /* Smooth transitions */
+
+  &:hover {
+    background-color: #d80d69; /* Slightly darker pink on hover */
+    box-shadow: 0px 12px 25px rgba(245, 22, 126, 0.6); /* Slightly larger shadow on hover */
+    color: #ffffff; /* Keep text white on hover */
+  }
+}
+
+@media (min-width: 769px) {
+  .mat-mdc-card-header {
+    padding:  0 40px 0 !important; /* Restore large padding for wider screens */
+  }
+}
+
+@media (max-width: 500px) {
+  mat-card-title {
+    font-size: 2em; /* Smaller title on very small screens */
+    margin-bottom: 20px;
+  }
+  mat-card-title::after {
+    width: 60px; /* Smaller underline */
+  }
+}

@@ -1,0 +1,276 @@
+<div class="admin-dashboard-container">
+  <h1>Admin Dashboard</h1>
+
+  <div class="stats-section">
+    <h2>Overall Statistics</h2>
+    <div *ngIf="isLoadingStats" class="loading-stats">
+      <p>Loading total tickets sold...</p>
+    </div>
+    <div *ngIf="statsErrorMessage" class="error-stats">
+      <p class="error-text">{{ statsErrorMessage }}</p>
+      <button (click)="loadTotalTicketsSold()">Retry</button>
+    </div>
+    <div *ngIf="!isLoadingStats && !statsErrorMessage" class="stat-card">
+      <h3>Total Tickets Sold Across All Events:</h3>
+      <p class="stat-value">{{ totalTicketsSold !== null ? totalTicketsSold : 'N/A' }}</p>
+    </div>
+
+    <hr>
+    <div *ngIf="isSuperAdmin" class="admin-performance-stats-container">
+      <h2>Admin Performance Statistics</h2>
+
+      <div *ngIf="loadingAdminStatistics" class="loading-message">
+        <p>Loading admin statistics...</p>
+      </div>
+
+      <div *ngIf="adminStatsErrorMessage" class="error-message">
+        <p>{{ adminStatsErrorMessage }}</p>
+        <button (click)="loadAdminStatistics()">Retry Load</button>
+      </div>
+
+      <div *ngIf="!loadingAdminStatistics && !adminStatsErrorMessage && adminStatistics.length === 0" class="no-messages">
+        <p>No admin users found with statistics.</p>
+      </div>
+
+      <table *ngIf="!loadingAdminStatistics && !adminStatsErrorMessage && adminStatistics.length > 0" class="admin-stats-table">
+        <thead>
+          <tr>
+            <th>Admin Email</th>
+            <th>Tickets Revenue (from their events)</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of adminStatistics">
+            <td>{{ stat.email }}</td>
+            <td>{{ stat.totalRevenue | currency:'TND':'symbol':'1.2-2' }}</td>
+            <td>
+              <input type="number"
+                     [(ngModel)]="stat.percentage"
+                     name="percentage_{{stat.id}}"
+                     min="0" max="100" step="0.01"
+                     (blur)="savePercentageDirectly(stat)"
+                     (keyup.enter)="savePercentageDirectly(stat)"
+                     [disabled]="!isSuperAdmin"
+                     placeholder="N/A"> %
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  <hr>
+
+  <div class="view-switcher">
+    <button [class.active]="currentView === 'events'" (click)="switchView('events')">Manage Events</button>
+    <button *ngIf="isSuperAdmin" [class.active]="currentView === 'users'" (click)="switchView('users')">Manage Users</button>
+    <button *ngIf="isSuperAdmin" [class.active]="currentView === 'contact-messages'" (click)="switchView('contact-messages')">Manage Contact Messages</button>
+  </div>
+  <hr>
+
+  <div *ngIf="currentView === 'events'">
+    <h2>Event Management</h2>
+
+    <button class="but-e" (click)="addNewEvent()" *ngIf="!editingEventForm">Add New Event</button>
+
+    <div class="search-bar-container" *ngIf="!editingEventForm">
+      <label for="eventSearch">Search Events:</label>
+      <input id="eventSearch" [(ngModel)]="searchTerm" name="eventSearch" placeholder="Search by title, description, location, or category">
+    </div>
+    <form (ngSubmit)="onSubmit()" *ngIf="editingEventForm" class="event-form">
+      <h3>{{ editingEventForm.id ? 'Modify Event' : 'Create New Event' }}</h3>
+
+      <label for="eventTitle">Title:</label>
+      <input id="eventTitle" [(ngModel)]="editingEventForm.title" name="title" placeholder="Event Title" required>
+
+      <label for="eventDescription">Description:</label>
+      <textarea id="eventDescription" [(ngModel)]="editingEventForm.description" name="description" placeholder="Event Description" required></textarea>
+
+      <label for="eventDateTime">Date & Time:</label>
+      <input id="eventDateTime" type="datetime-local" [(ngModel)]="editingEventForm.eventDateTime" name="eventDateTime" required>
+
+      <label for="eventLocation">Location:</label>
+      <input id="eventLocation" [(ngModel)]="editingEventForm.location" name="location" placeholder="Event Location" required>
+
+      <label for="eventPrice">Price (TND):</label>
+      <input id="eventPrice" [(ngModel)]="editingEventForm.price" name="price" type="number" placeholder="Price" required min="0">
+
+      <label for="eventImageUrl">Image URL:</label>
+      <input id="eventImageUrl" [(ngModel)]="editingEventForm.imageUrl" name="imageUrl" placeholder="Image URL">
+
+      <label for="eventCategories">Categories (comma-separated):</label>
+      <input id="eventCategories" [(ngModel)]="editingEventForm.categories" name="categories" placeholder="e.g., SPORT, MUSIC">
+
+      <label for="eventTotalTickets">Total Tickets:</label>
+      <input id="eventTotalTickets" [(ngModel)]="editingEventForm.totalTickets" name="totalTickets" type="number" placeholder="Total Tickets" required min="1">
+
+      <div class="form-actions">
+        <button type="submit">{{ editingEventForm.id ? 'Modify Event' : 'Create Event' }}</button>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+
+    <hr *ngIf="!editingEventForm">
+
+    <div class="events-list">
+      <h3>Current Events</h3>
+      <p *ngIf="filteredEvents.length === 0 && !editingEventForm">No events found matching your search criteria.</p>
+      <div *ngFor="let event of filteredEvents" class="event-card">
+        <h4>{{ event.title }}</h4>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.eventDateTime | date:'medium' }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Price:</strong> {{ event.price }} TND</p>
+        <p><strong>Categories:</strong> {{ event.categories && event.categories.length > 0 ? event.categories.join(', ') : 'N/A' }}</p>
+        <p *ngIf="event.imageUrl">
+          <img [src]="event.imageUrl" alt="Event Image" class="event-image">
+        </p>
+        <p><strong>Total Tickets:</strong> {{ event.totalTickets }}</p>
+        <div class="card-actions">
+          <button (click)="editEvent(event)">Modify</button>
+          <button (click)="deleteEvent(event.id!)" class="delete-button">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'users'">
+    <div *ngIf="isSuperAdmin">
+      <h2>User Management</h2>
+
+      <button (click)="addNewUser()" *ngIf="!editingUserForm" class="add-new-button">Add New Admin/Super Admin</button>
+
+      <form (ngSubmit)="onSubmitUserForm()" *ngIf="editingUserForm" class="user-form">
+        <h3>{{ editingUserForm.id ? 'Modify User' : 'Create New Admin User' }}</h3>
+
+        <label for="userUsername">Username:</label>
+        <input id="userUsername" [(ngModel)]="editingUserForm.username" name="username" placeholder="Username" required>
+
+        <label for="userEmail">Email:</label>
+        <input id="userEmail" [(ngModel)]="editingUserForm.email" name="email" type="email" placeholder="Email" required>
+
+        <label for="userPassword">Password:</label>
+        <input id="userPassword" [(ngModel)]="editingUserForm.password" name="password" type="password" placeholder="Password" [required]="!editingUserForm.id">
+
+        <label for="userPhoneNumber">Phone Number:</label>
+        <input id="userPhoneNumber" [(ngModel)]="editingUserForm.phoneNumber" name="phoneNumber" placeholder="Phone Number">
+
+        <label for="userRole" *ngIf="isSuperAdmin">Role:</label>
+        <select id="userRole" [(ngModel)]="editingUserForm.role" name="role" *ngIf="isSuperAdmin"
+                [disabled]="editingUserForm.id === currentUserId && isSuperAdmin">
+          <option *ngFor="let role of userRoles" [ngValue]="role">{{ role }}</option>
+        </select>
+
+        <div class="form-actions">
+          <button type="submit">{{ editingUserForm.id ? 'Save Changes' : 'Create User' }}</button>
+          <button type="button" (click)="cancelEditUser()" class="cancel-button">Cancel</button>
+        </div>
+      </form>
+
+      <hr *ngIf="!editingUserForm">
+
+      <div class="users-list-section">
+        <h3>All Users</h3>
+        <p *ngIf="users.length === 0 && !editingUserForm">No users found.</p>
+        <table *ngIf="users.length > 0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Role</th>
+              <th *ngIf="isSuperAdmin">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phoneNumber }}</td>
+              <td>
+                <select [(ngModel)]="user.role" name="userRole_{{user.id}}"
+                        (change)="updateUserRoleDirectly(user, user.role)"
+                        *ngIf="isSuperAdmin"
+                        [disabled]="user.id === currentUserId && isSuperAdmin">
+                  <option *ngFor="let role of userRoles" [ngValue]="role">{{ role }}</option>
+                </select>
+                <span *ngIf="!isSuperAdmin">{{ user.role }}</span>
+              </td>
+              <td *ngIf="isSuperAdmin" class="user-actions">
+                <button (click)="editUser(user)" class="modify-button">Modify</button>
+                <button (click)="deleteUser(user.id!)" class="delete-button"
+                        [disabled]="user.id === currentUserId && isSuperAdmin"
+                        [title]="(user.id === currentUserId && isSuperAdmin) ? 'Cannot delete your own account' : ''">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'contact-messages'">
+    <h2>Contact Messages Admin Dashboard</h2>
+
+    <div *ngIf="loadingContactMessages" class="loading-message">
+      <p>Loading contact messages...</p>
+    </div>
+
+    <div *ngIf="contactMessagesError" class="error-message">
+      <p>{{ contactMessagesError }}</p>
+      <button (click)="loadContactMessages()">Retry Load</button>
+    </div>
+
+    <div *ngIf="!loadingContactMessages && !contactMessagesError && contactMessages.length === 0" class="no-messages">
+      <p>No contact messages found.</p>
+    </div>
+
+    <table *ngIf="!loadingContactMessages && !contactMessagesError && contactMessages.length > 0" class="messages-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Message</th>
+          <th>Sent Time</th>
+          <th>Replied</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let msg of contactMessages">
+          <td>{{ msg.id }}</td>
+          <td>{{ msg.email }}</td>
+          <td>{{ msg.phoneNumber }}</td>
+          <td>{{ msg.message }}</td>
+          <td>{{ msg.sentTime | date:'short' }}</td> <td>
+            <span [ngClass]="{'replied': msg.replied, 'not-replied': !msg.replied}">
+              {{ msg.replied ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button
+              *ngIf="!msg.replied"
+              (click)="markContactMessageAsReplied(msg.id)"
+              class="action-button mark-replied"
+              title="Mark as Replied"
+            >
+              Mark Replied
+            </button>
+            <button
+              (click)="deleteContactMessage(msg.id)"
+              class="action-button delete"
+              title="Delete Message"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

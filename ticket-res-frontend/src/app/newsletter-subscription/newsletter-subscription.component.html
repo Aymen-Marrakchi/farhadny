@@ -1,0 +1,16 @@
+<div class="newsletter-container">
+  <h3>Stay In The Loop</h3>
+  <p>Join our mailing list to stay in the loop with our newest for Event and concert</p>
+
+  <div class="newsletter-actions">
+    <button type="button" class="subscribe-button" (click)="onSubscribe()" *ngIf="isLoggedIn && !isSubscribed">
+      Subscribe Now
+    </button>
+    <button type="button" class="unsubscribe-button" (click)="onUnsubscribe()" *ngIf="isLoggedIn && isSubscribed">
+      Unsubscribe
+    </button>
+    <p *ngIf="!isLoggedIn" class="login-prompt-message">Please log in to manage your newsletter subscription.</p>
+  </div>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+</div>

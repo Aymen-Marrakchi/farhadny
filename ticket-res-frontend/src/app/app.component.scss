@@ -1,0 +1,23 @@
+/* src/app/my-orders/my-orders.component.scss (example) */
+.ticket-list {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  
+}
+
+@media (min-width: 768px) { // Using explicit values or imported variables
+  .ticket-list {
+    flex-direction: row; /* Arrange side-by-side on tablet/desktop */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ticket-card {
+    width: calc(50% - 20px); /* 2 columns with gap */
+  }
+}
+
+@media (min-width: 1024px) {
+  .ticket-card {
+    width: calc(33.33% - 20px); /* 3 columns with gap */
+  }
+}

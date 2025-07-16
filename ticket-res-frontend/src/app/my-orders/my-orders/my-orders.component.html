@@ -1,0 +1,45 @@
+<div class="my-orders-container">
+  <h2>My Tickets & Orders</h2>
+
+  <div *ngIf="isLoading" class="loading-message">
+    Loading your tickets...
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="userTickets.length > 0 && !isLoading" class="ticket-list">
+    <div *ngFor="let ticket of userTickets" class="ticket-card">
+      <div class="ticket-details">
+        <h3>Ticket ID: {{ ticket.id }}</h3>
+        <p><strong>Status:</strong> {{ ticket.status }}</p>
+        <p><strong>Purchase Date:</strong> {{ formatDateTime(ticket.purchaseDateTime) }}</p>
+        <p><strong>Price Paid:</strong> {{ ticket.pricePaid | currency:'TND':'symbol':'1.2-2' }}</p>
+        <p *ngIf="ticket.seatInfo"><strong>Seat Info:</strong> {{ ticket.seatInfo }}</p>
+
+        <ng-container *ngIf="ticket.event">
+          <h4>Event Details:</h4>
+          <p><strong>Title:</strong> {{ ticket.event.title }}</p>
+          <p><strong>Description:</strong> {{ ticket.event.description }}</p>
+          <p><strong>Date & Time:</strong> {{ formatDateTime(ticket.event.eventDateTime) }}</p>
+          <p><strong>Location:</strong> {{ ticket.event.location }}</p>
+          <p><strong>Event Price:</strong> {{ ticket.event.price | currency:'TND':'symbol':'1.2-2' }}</p>
+          <p *ngIf="ticket.event.categories && ticket.event.categories.length > 0">
+            <strong>Categories:</strong> {{ ticket.event.categories.join(', ') }}
+          </p>
+          <div *ngIf="ticket.event.imageUrl" class="event-image-wrapper">
+            <img [src]="ticket.event.imageUrl" alt="{{ ticket.event.title }}" class="event-image">
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="qr-code-section">
+        <h4>QR Code:</h4>
+        <qrcode [qrdata]="ticket.qrCode || 'No QR Code'" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+        <p class="qr-code-text">{{ ticket.qrCode }}</p>
+        <p *ngIf="!ticket.qrCode" class="no-qr-message">QR Code not available</p>
+      </div>
+    </div>
+  </div>
+</div>

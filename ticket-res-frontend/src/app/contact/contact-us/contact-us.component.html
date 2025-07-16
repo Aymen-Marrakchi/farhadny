@@ -1,0 +1,13 @@
+<div class="contact-wrapper">
+  <div class="contact-left">
+    <h2>Contact Us</h2>
+    <form (ngSubmit)="onSubmit()">
+      <input type="email" placeholder="Email" [(ngModel)]="contactData.email" name="email" required />
+      <input type="tel" placeholder="Phone Number" [(ngModel)]="contactData.phonenumber" name="tel" required />
+      <textarea placeholder="Message" [(ngModel)]="contactData.message" name="message" required></textarea>
+      <button type="submit">Contact Us</button>
+    </form>
+  </div>
+
+  
+</div>

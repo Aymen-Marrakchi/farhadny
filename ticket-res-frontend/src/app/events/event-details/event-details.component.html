@@ -1,0 +1,43 @@
+<div class="event-details-page">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+    <p>Loading event details...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div class="content-wrapper" *ngIf="event && !isLoading">
+    <div class="event-info">
+      <h1>{{ event.title }}</h1>
+      <img [src]="event.imageUrl || '/assets/images/event.jpg'" alt="{{ event.title }}" class="event-image">
+      <p><strong>Description:</strong> {{ event.description }}</p>
+      <p><strong>Date:</strong> {{ event.eventDateTime | date:'fullDate' }} </p>
+      <p><strong>Location:</strong> {{ event.location }}</p>
+      <p><strong>Price:</strong> {{ event.price | currency:'TND':'symbol':'1.2-2' }}</p>
+      <p><strong>Category:</strong> <span *ngFor="let category of event.categories; last as isLast">{{ category }}<span *ngIf="!isLast">, </span></span></p>
+      </div>
+        <div *ngIf="event" class="event-details-card">
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.description }}</p>
+        <p>Date: {{ event.eventDateTime | date:'medium' }}</p>
+        <p>Location: {{ event.location }}</p>
+        <p>Price: {{ event.price | currency:'TND':'symbol':'1.2-2' }}</p>
+
+        <div class="share-section">
+            <h3 >Share this Event:</h3>
+            <app-share-buttons
+            [url]="currentEventUrl"
+            [title]="event.title + ' - Check out this event!'"
+            ></app-share-buttons>
+        </div>
+
+        </div>  
+
+    <div class="ticket-form-section">
+      <h2>Get Your Tickets</h2>
+      <app-ticket-form [eventId]="event.id" [eventPrice]="event.price"></app-ticket-form>
+    </div>
+  </div>
+</div>

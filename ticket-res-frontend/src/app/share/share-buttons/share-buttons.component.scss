@@ -1,0 +1,67 @@
+/* src/app/share-buttons/share-buttons.component.scss */
+
+@use "sass:color"; // <--- ADD THIS LINE AT THE VERY TOP
+
+.share-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.share-button {
+  background-color: transparent !important;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  color: #555;
+  
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  // Platform-specific colors
+  &.facebook {
+    background-color: transparent;
+    color: black;
+  }
+  &.linkedin {
+    background-color: #0A66C2;
+    color: white;
+    // UPDATED: Using color.mix
+    &:hover { background-color: color.mix(black, #0A66C2, 10%); }
+  }
+  &.twitter {
+    background-color: #1DA1F2;
+    color: white;
+    // UPDATED: Using color.mix
+    &:hover { background-color: color.mix(black, #1DA1F2, 10%); }
+  }
+  &.whatsapp {
+    background-color: #25D366;
+    color: white;
+    // UPDATED: Using color.mix
+    &:hover { background-color: color.mix(black, #25D366, 10%); }
+  }
+  &.email {
+    background-color: #D44638;
+    color: white;
+    // UPDATED: Using color.mix
+    &:hover { background-color: color.mix(black, #D44638, 10%); }
+  }
+}
